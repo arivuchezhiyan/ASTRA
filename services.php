@@ -28,17 +28,21 @@ include 'includes/header.php';
                 <figure class="main polaroid" style="border-radius: 8px; overflow: hidden; margin-bottom: 20px;">
                   <a href="<?php echo BASE_URL; ?>/services/<?php echo $service['slug']; ?>">
                     <?php if ($service['slug'] === 'weddings'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_14.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" loading="lazy" />
+                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_15.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 35%;" loading="lazy" />
                     <?php elseif ($service['slug'] === 'pre-wedding'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_7.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" loading="lazy" />
+                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_7.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center bottom;" loading="lazy" />
+                    <?php elseif ($service['slug'] === 'reception'): ?>
+                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_16.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 55%;" loading="lazy" />
                     <?php elseif ($service['slug'] === 'baby-shoots'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_5.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" loading="lazy" />
+                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_5.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 20%;" loading="lazy" />
                     <?php elseif ($service['slug'] === 'maternity'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_12.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" loading="lazy" />
+                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_12.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
+                    <?php elseif ($service['slug'] === 'birthdays'): ?>
+                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_3.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 15%;" loading="lazy" />
                     <?php elseif ($service['banner_image']): ?>
-                    <img src="<?php echo upload_url('services', $service['banner_image']); ?>" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" loading="lazy" />
+                    <img src="<?php echo upload_url('services', $service['banner_image']); ?>" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
                     <?php else: ?>
-                    <img src="<?php echo BASE_URL; ?>/style/images/art/bg16.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" loading="lazy" />
+                    <img src="<?php echo BASE_URL; ?>/style/images/art/bg16.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
                     <?php endif; ?>
                   </a>
                 </figure>

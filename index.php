@@ -170,19 +170,23 @@ include 'includes/header.php';
                 ASSETS_URL . '/images/art/si10.jpg',
             ];
             foreach ($display_services as $idx => $svc):
+              $object_position = 'center';
               if ($svc['slug'] === 'weddings') {
-                  $img = BASE_URL . '/assets/images/images/wedding/img_13.jpg';
-              } elseif ($svc['slug'] === 'reception') {
                   $img = BASE_URL . '/assets/images/images/wedding/img_15.jpg';
+                  $object_position = 'center 35%';
+              } elseif ($svc['slug'] === 'reception') {
+                  $img = BASE_URL . '/assets/images/images/wedding/img_16.jpg';
+                  $object_position = 'center 55%';
               } elseif ($svc['slug'] === 'pre-wedding') {
-                  $img = BASE_URL . '/assets/images/images/wedding/img_1.jpg';
+                  $img = BASE_URL . '/assets/images/images/wedding/img_7.jpg';
+                  $object_position = 'center bottom';
               } else {
                   $img = $svc['banner_image'] ? upload_url('services', $svc['banner_image']) : ($service_images[$idx] ?? $service_images[0]);
               }
             ?>
             <div class="item col-md-4">
               <div class="box bg-pastel-default p-30">
-                <figure class="main mb-20" style="border-radius: 8px; overflow: hidden;"><a href="<?php echo BASE_URL; ?>/services/<?php echo $svc['slug']; ?>"><img src="<?php echo $img; ?>" alt="<?php echo sanitize($svc['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" loading="lazy" /></a></figure>
+                <figure class="main mb-20" style="border-radius: 8px; overflow: hidden;"><a href="<?php echo BASE_URL; ?>/services/<?php echo $svc['slug']; ?>"><img src="<?php echo $img; ?>" alt="<?php echo sanitize($svc['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: <?php echo $object_position; ?>;" loading="lazy" /></a></figure>
                 <h5 class="mb-0"><a href="<?php echo BASE_URL; ?>/services/<?php echo $svc['slug']; ?>"><?php echo sanitize($svc['service_name']); ?></a></h5>
               </div>
               <!-- /.box -->
