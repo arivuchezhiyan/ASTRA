@@ -370,3 +370,19 @@ function render_pagination($current_page, $total_pages, $base_url) {
     $html .= '</ul></div>';
     return $html;
 }
+
+/**
+ * Format address into a single compact line separated by commas
+ */
+function get_compact_address($address) {
+    $addr_lines = array_filter(array_map('trim', explode("\n", $address)));
+    $clean_addr_lines = [];
+    foreach ($addr_lines as $line) {
+        $line = rtrim($line, ',');
+        if ($line !== '') {
+            $clean_addr_lines[] = $line;
+        }
+    }
+    return implode(', ', $clean_addr_lines);
+}
+

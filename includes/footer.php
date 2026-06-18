@@ -294,7 +294,7 @@ $footer_branches = get_branches($pdo);
                   <h6><?php echo sanitize($branch['branch_name']); ?></h6>
                   <p>
                     <a href="<?php echo sanitize($branch['google_map']); ?>" target="_blank" class="address-map-link">
-                      <?php echo nl2br(sanitize($branch['address'])); ?>
+                      <?php echo sanitize(get_compact_address($branch['address'])); ?>
                     </a>
                   </p>
                   <p class="mb-0">
