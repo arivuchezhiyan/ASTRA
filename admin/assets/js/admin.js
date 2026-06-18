@@ -10,10 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
   }
 
-  // Image upload preview
+  // Image/Video upload preview
   document.querySelectorAll('.upload-zone').forEach(zone => {
     const input = zone.querySelector('input[type="file"]');
-    const preview = zone.querySelector('.preview-img') || zone.parentElement.querySelector('.preview-img');
 
     if (input) {
       zone.addEventListener('click', () => input.click());
@@ -22,20 +21,34 @@ document.addEventListener('DOMContentLoaded', function() {
       zone.addEventListener('drop', e => {
         e.preventDefault(); zone.classList.remove('dragover');
         input.files = e.dataTransfer.files;
-        showPreview(input, preview);
+        showPreview(input, zone);
       });
-      input.addEventListener('change', () => showPreview(input, preview));
+      input.addEventListener('change', () => showPreview(input, zone));
     }
   });
 
-  function showPreview(input, preview) {
-    if (input.files && input.files[0] && preview) {
+  function showPreview(input, zone) {
+    const previewImg = zone.querySelector('.preview-img') || zone.parentElement.querySelector('.preview-img');
+    const previewVideo = zone.querySelector('.preview-video') || zone.parentElement.querySelector('.preview-video');
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
       const reader = new FileReader();
       reader.onload = e => {
-        preview.src = e.target.result;
-        preview.style.display = 'block';
+        if (file.type.startsWith('video/')) {
+          if (previewImg) previewImg.style.display = 'none';
+          if (previewVideo) {
+            previewVideo.src = e.target.result;
+            previewVideo.style.display = 'block';
+          }
+        } else {
+          if (previewVideo) previewVideo.style.display = 'none';
+          if (previewImg) {
+            previewImg.src = e.target.result;
+            previewImg.style.display = 'block';
+          }
+        }
       };
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(file);
     }
   }
 

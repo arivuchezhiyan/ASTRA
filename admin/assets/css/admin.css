@@ -199,7 +199,8 @@ body {
 
 .admin-table tr:hover { background: #f8fafc; }
 
-.admin-table img.thumb {
+.admin-table img.thumb,
+.admin-table video.thumb {
   width: 50px; height: 50px;
   object-fit: cover; border-radius: 8px;
 }

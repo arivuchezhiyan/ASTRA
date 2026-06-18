@@ -19,9 +19,9 @@ define('WHATSAPP_URL', 'https://wa.me/' . WHATSAPP_NUMBER);
 define('ITEMS_PER_PAGE', 9);
 
 // Upload settings
-define('MAX_UPLOAD_SIZE', 10 * 1024 * 1024); // 10MB
-define('ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'webp']);
-define('ALLOWED_MIME_TYPES', ['image/jpeg', 'image/png', 'image/webp']);
+define('MAX_UPLOAD_SIZE', 50 * 1024 * 1024); // 50MB (increased for videos)
+define('ALLOWED_EXTENSIONS', ['jpg', 'jpeg', 'png', 'webp', 'mp4', 'webm', 'ogg', 'mov']);
+define('ALLOWED_MIME_TYPES', ['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']);
 
 // Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
