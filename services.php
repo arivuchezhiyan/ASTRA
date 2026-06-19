@@ -15,55 +15,99 @@ $services = get_services($pdo);
 
 include 'includes/header.php';
 ?>
-    <div class="wrapper light-wrapper">
-      <div class="container inner inner-page-padding">
-        <h2 class="section-title text-center">Our Services</h2>
-        <p class="lead larger text-center">We specialize in capturing your special moments with creativity and passion</p>
-        <div class="space30"></div>
-        <div class="tiles">
-          <div class="items row boxed grid-view text-center">
-            <?php foreach ($services as $service): ?>
-            <div class="item col-md-4">
-              <div class="box bg-white shadow p-30">
-                <figure class="main polaroid" style="border-radius: 8px; overflow: hidden; margin-bottom: 20px;">
-                  <a href="<?php echo BASE_URL; ?>/services/<?php echo $service['slug']; ?>">
-                    <?php if ($service['slug'] === 'weddings'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_15.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 35%;" loading="lazy" />
-                    <?php elseif ($service['slug'] === 'pre-wedding'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_7.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center bottom;" loading="lazy" />
-                    <?php elseif ($service['slug'] === 'reception'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/wedding/img_16.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 55%;" loading="lazy" />
-                    <?php elseif ($service['slug'] === 'baby-shoots'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_5.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 20%;" loading="lazy" />
-                    <?php elseif ($service['slug'] === 'maternity'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_12.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
-                    <?php elseif ($service['slug'] === 'birthdays'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_3.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 15%;" loading="lazy" />
-                    <?php elseif ($service['slug'] === 'baby-shower'): ?>
-                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shower/baby_shower_1.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 25%;" loading="lazy" />
-                    <?php elseif ($service['banner_image']): ?>
-                    <img src="<?php echo upload_url('services', $service['banner_image']); ?>" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
-                    <?php else: ?>
-                    <img src="<?php echo BASE_URL; ?>/style/images/art/bg16.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
-                    <?php endif; ?>
-                  </a>
-                </figure>
-                <h4 class="text-uppercase mb-0"><a href="<?php echo BASE_URL; ?>/services/<?php echo $service['slug']; ?>"><?php echo sanitize($service['service_name']); ?></a></h4>
-                <?php if ($service['short_description']): ?>
-                <p class="mt-10"><?php echo sanitize(truncate($service['short_description'], 100)); ?></p>
-                <?php endif; ?>
-              </div>
-              <!-- /.box -->
-            </div>
-            <!--/.item -->
-            <?php endforeach; ?>
-          </div>
-          <!--/.row -->
-        </div>
-        <!-- /.tiles -->
+    <div class="wrapper bg-pastel-default">
+      <div class="container inner inner-page-padding text-center">
+        <h1 class="section-title section-title-upper larger">Our Services</h1>
+        <p class="lead larger mb-0">We specialize in capturing your special moments with creativity, concept & passion.</p>
       </div>
       <!-- /.container -->
     </div>
+
+    <?php foreach ($services as $idx => $service):
+        $is_even = ($idx % 2 === 0);
+        $bg_class = ($idx % 2 === 0) ? 'light-wrapper' : 'gray-wrapper';
+        
+        // Select image and layout settings based on service slug
+        $img_path = '';
+        $object_position = 'center';
+        if ($service['slug'] === 'weddings') {
+            $img_path = BASE_URL . '/assets/images/images/wedding/img_15.jpg';
+            $object_position = 'center 35%';
+        } elseif ($service['slug'] === 'reception') {
+            $img_path = BASE_URL . '/assets/images/images/Reception/reception_1.jpg';
+            $object_position = 'center 55%';
+        } elseif ($service['slug'] === 'pre-wedding') {
+            $img_path = BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_1.jpg';
+            $object_position = 'center bottom';
+        } elseif ($service['slug'] === 'baby-shoots') {
+            $img_path = BASE_URL . '/assets/images/images/baby_shoots/img_5.jpg';
+            $object_position = 'center 20%';
+        } elseif ($service['slug'] === 'maternity') {
+            $img_path = BASE_URL . '/assets/images/images/maternity/maternity_3.jpg';
+            $object_position = 'center';
+        } elseif ($service['slug'] === 'birthdays') {
+            $img_path = BASE_URL . '/assets/images/images/baby_shoots/img_3.jpg';
+            $object_position = 'center 15%';
+        } elseif ($service['slug'] === 'baby-shower') {
+            $img_path = BASE_URL . '/assets/images/images/baby_shower/baby_shower_5.jpg';
+            $object_position = 'center 25%';
+        } elseif ($service['banner_image']) {
+            $img_path = upload_url('services', $service['banner_image']);
+            $object_position = 'center';
+        } else {
+            $img_path = BASE_URL . '/style/images/art/bg16.jpg';
+            $object_position = 'center';
+        }
+    ?>
+    <div class="wrapper <?php echo $bg_class; ?>">
+      <div class="container inner">
+        <div class="row d-flex align-items-center">
+          <?php if ($is_even): ?>
+            <!-- Text Left, Image Right -->
+            <div class="col-lg-5 pr-35 pr-sm-15">
+              <h2 class="section-title section-title-upper larger"><?php echo sanitize($service['service_name']); ?></h2>
+              <?php if ($service['short_description']): ?>
+              <p class="lead"><?php echo sanitize($service['short_description']); ?></p>
+              <?php endif; ?>
+              <?php if ($service['full_description']): ?>
+              <p><?php echo sanitize($service['full_description']); ?></p>
+              <?php endif; ?>
+              <div class="space15"></div>
+              <a href="<?php echo BASE_URL; ?>/contact?service=<?php echo $service['slug']; ?>" class="btn btn-white shadow">Book This Service</a>
+            </div>
+            <!--/column -->
+            <div class="space30 d-block d-lg-none d-xl-none"></div>
+            <div class="col-lg-7">
+              <figure class="rounded" style="overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.08); margin-bottom: 0;"><img src="<?php echo $img_path; ?>" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: <?php echo $object_position; ?>;" loading="lazy" /></figure>
+            </div>
+            <!--/column -->
+          <?php else: ?>
+            <!-- Image Left, Text Right -->
+            <div class="col-lg-7 pr-35 pr-sm-15">
+              <figure class="rounded" style="overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.08); margin-bottom: 0;"><img src="<?php echo $img_path; ?>" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: <?php echo $object_position; ?>;" loading="lazy" /></figure>
+            </div>
+            <!--/column -->
+            <div class="space30 d-block d-lg-none d-xl-none"></div>
+            <div class="col-lg-5">
+              <h2 class="section-title section-title-upper larger"><?php echo sanitize($service['service_name']); ?></h2>
+              <?php if ($service['short_description']): ?>
+              <p class="lead"><?php echo sanitize($service['short_description']); ?></p>
+              <?php endif; ?>
+              <?php if ($service['full_description']): ?>
+              <p><?php echo sanitize($service['full_description']); ?></p>
+              <?php endif; ?>
+              <div class="space15"></div>
+              <a href="<?php echo BASE_URL; ?>/contact?service=<?php echo $service['slug']; ?>" class="btn btn-white shadow">Book This Service</a>
+            </div>
+            <!--/column -->
+          <?php endif; ?>
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /.wrapper -->
+    <?php endforeach; ?>
     <!-- Video Showcase (Behind the Scenes) -->
     <div class="wrapper dark-wrapper inverse-text">
       <div class="container inner">
