@@ -19,11 +19,36 @@ include 'includes/header.php';
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Reenie+Beanie&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-  /* Subtle light leak decoration background glows */
+  /* Custom services header spacing to prevent overlapping and reduce unnecessary empty space */
+  .services-header-container {
+    padding-top: 145px !important;
+    padding-bottom: 45px !important;
+  }
+  @media (max-width: 991.98px) {
+    .services-header-container {
+      padding-top: 110px !important;
+      padding-bottom: 15px !important;
+    }
+  }
+
+  /* Reduce space inside each service section to optimize margins */
+  .service-section-wrap .inner {
+    padding-top: 45px !important;
+    padding-bottom: 45px !important;
+  }
   .service-section-wrap {
     position: relative;
     overflow: hidden;
-    padding: 100px 0;
+    padding: 15px 0 !important;
+  }
+  @media (max-width: 767.98px) {
+    .service-section-wrap .inner {
+      padding-top: 25px !important;
+      padding-bottom: 25px !important;
+    }
+    .service-section-wrap {
+      padding: 10px 0 !important;
+    }
   }
   .service-section-wrap::after {
     content: "";
@@ -846,10 +871,600 @@ include 'includes/header.php';
       height: 200px !important;
     }
   }
-</style>
+
+  /* ======================================================= */
+  /* BUTTERFLY BASKET DROP – REALISTIC ANIMATION             */
+  /* ======================================================= */
+  /* IMAGE CONVERGENCE BURST – SERVICES PAGE LOADER          */
+  /* ======================================================= */
+  /* IMAGE CONVERGENCE BURST – SERVICES PAGE LOADER          */
+  /* ======================================================= */
+  .svc-loader-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, #faf8f4 0%, #fdfbf9 40%, #f5efe8 100%);
+    z-index: 999999;
+    overflow: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .svc-loader-overlay.done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .svc-loader-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* --- Flying photo tiles --- */
+  .fly-tile {
+    position: absolute;
+    background: #fff;
+    padding: 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    border-radius: 4px;
+    opacity: 0;
+    z-index: 10;
+    pointer-events: none;
+    will-change: transform, opacity, left, top;
+    overflow: hidden;
+  }
+  .fly-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .fly-tile.moving {
+    opacity: 1;
+    transition: none;
+  }
+  .fly-tile.landed {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+
+  /* --- Center assembled mosaic (hidden until all converge) --- */
+  .burst-flash {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(243,198,35,0.7) 30%, rgba(176,87,53,0.3) 60%, transparent 80%);
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    pointer-events: none;
+    opacity: 0;
+    will-change: width, height, opacity;
+  }
+
+  /* --- Title reveal --- */
+  .svc-title-reveal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    text-align: center;
+    pointer-events: none;
+  }
+  .svc-title-reveal h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: #b05735;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow: 0 6px 20px rgba(176,87,53,0.18);
+    margin: 0;
+    opacity: 0;
+    transform: scale(0.1);
+    will-change: transform, opacity;
+  }
+  .svc-title-reveal .svc-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    color: rgba(176,87,53,0.55);
+    opacity: 0;
+    margin-top: 10px;
+    will-change: opacity;
+  }
+
+  /* --- Burst shards (fly outward after convergence) --- */
+  .burst-shard {
+    position: absolute;
+    background: #fff;
+    padding: 4px;
+    border-radius: 3px;
+    opacity: 0;
+    z-index: 40;
+    pointer-events: none;
+    will-change: transform, opacity;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  }
+  .burst-shard img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 1px;
+  }
+
+  /* --- Gold ring pulse behind burst --- */
+  .gold-ring-pulse {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid rgba(212,175,55,0.45);
+    border-radius: 50%;
+    width: 0; height: 0;
+    opacity: 0;
+    z-index: 25;
+    pointer-events: none;
+    will-change: width, height, opacity;
+  }
+
+  @media (max-width: 767.98px) {
+    .svc-title-reveal h1 { font-size: 38px; letter-spacing: 3px; }
+    .svc-title-reveal .svc-sub { font-size: 11px; letter-spacing: 3px; }
+    .fly-tile { padding: 3px; }
+    .burst-shard { padding: 2px; }
+  }
+
+  /* ========================================== */
+  /* POSTAGE STAMP STICKERS                     */
+  /* ========================================== */
+  .postage-stamp {
+    position: absolute;
+    width: 125px;
+    height: 96px;
+    background: #ffffff;
+    padding: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    border: 1px dashed rgba(0,0,0,0.06);
+    z-index: 5;
+    pointer-events: auto;
+    
+    /* Perforated edge effect */
+    background-image: 
+      radial-gradient(circle, transparent 0%, transparent 4px, #ffffff 4px);
+    background-size: 14px 14px;
+    background-position: -7px -7px;
+    
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+  }
+  
+  .postage-stamp:hover {
+    transform: scale(1.15) rotate(0deg) !important;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    z-index: 10;
+  }
+
+  .postage-stamp-inner {
+    width: 100%;
+    height: 100%;
+    background: #fdfaf6;
+    border: 1px solid rgba(0,0,0,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .postage-stamp-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: sepia(0.08) contrast(1.02);
+  }
+
+  .postmark-seal {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 1.2px dashed rgba(176,87,53,0.32);
+    border-radius: 50%;
+    top: -14px;
+    right: -14px;
+    transform: rotate(-15deg);
+    pointer-events: none;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .postmark-seal::before {
+    content: "ASTRA";
+    font-family: 'Montserrat', sans-serif;
+    font-size: 6px;
+    font-weight: 600;
+    color: rgba(176,87,53,0.35);
+    letter-spacing: 1px;
+  }
+
+  /* Specific Positions for each service postage stamp */
+  .stamp-weddings { bottom: -45px; left: -15px; transform: rotate(-8deg); }
+  .stamp-reception { bottom: -40px; right: -15px; transform: rotate(10deg); }
+  .stamp-prewedding { bottom: -45px; left: -10px; transform: rotate(-12deg); }
+  .stamp-babyshoots { bottom: -40px; right: -12px; transform: rotate(7deg); }
+  .stamp-birthdays { bottom: -45px; left: -15px; transform: rotate(-10deg); }
+  .stamp-babyshower { bottom: -40px; right: -10px; transform: rotate(8deg); }
+  .stamp-maternity { bottom: -45px; left: -12px; transform: rotate(-6deg); }
+
+  @media (max-width: 991.98px) {
+    .postage-stamp {
+      display: none !important; /* Hide on mobile to avoid overlapping */
+    }
+  }
+  </style>
+
+<div id="svc-page-loader" class="svc-loader-overlay">
+  <div class="svc-loader-scene">
+    <?php
+    // 45 images (one for each 8° direction around 360°) — cycle through service photos
+    $convergence_imgs = [
+      BASE_URL . '/assets/images/images/wedding/img_6.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_1.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_1.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_5.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_3.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_5.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_11.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_3.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_3.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_2.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_1.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_1.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_18.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_5.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_5.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_6.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_5.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_7.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_15.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_7.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_7.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_10.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_7.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_8.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_5.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_9.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_14.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_3.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_1.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_4.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_8.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_6.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_1.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_1.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_5.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_3.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_5.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_11.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_3.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_3.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_2.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_1.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_1.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_18.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_5.jpg',
+    ];
+
+    // Generate 45 dynamic tile sizes: width between 110 and 140px, height calculated with 0.76 ratio
+    $tile_sizes = [];
+    for ($ti = 0; $ti < 45; $ti++) {
+        $w = 110 + (($ti * 7) % 31);
+        $h = round($w * 0.76);
+        $tile_sizes[] = [$w, $h];
+    }
+
+    for ($ti = 0; $ti < 45; $ti++):
+    ?>
+    <div class="fly-tile" id="ft<?php echo $ti; ?>" style="width:<?php echo $tile_sizes[$ti][0]; ?>px;height:<?php echo $tile_sizes[$ti][1]; ?>px;"><img src="<?php echo $convergence_imgs[$ti]; ?>" alt="" loading="eager"/></div>
+    <?php endfor; ?>
+
+    <!-- Burst flash -->
+    <div class="burst-flash" id="burstFlash"></div>
+
+    <!-- Gold ring pulses -->
+    <div class="gold-ring-pulse" id="ring1"></div>
+    <div class="gold-ring-pulse" id="ring2"></div>
+
+    <!-- Burst shards (fragments that fly outward after convergence) -->
+    <?php
+    $shard_imgs = [
+      BASE_URL . '/assets/images/images/wedding/img_6.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_1.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_1.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_5.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_3.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_5.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_11.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_3.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_3.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_2.jpg',
+      BASE_URL . '/assets/images/images/maternity/maternity_1.jpg',
+      BASE_URL . '/assets/images/images/baby_shower/baby_shower_1.jpg',
+      BASE_URL . '/assets/images/images/wedding/img_18.jpg',
+      BASE_URL . '/assets/images/images/Reception/reception_5.jpg',
+      BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_5.jpg',
+      BASE_URL . '/assets/images/images/baby_shoots/img_6.jpg',
+    ];
+    for ($si = 0; $si < 16; $si++):
+      $sw = 60 + ($si % 5) * 12; // width from 60 to 108px
+      $sh = round($sw * 0.76);
+    ?>
+    <div class="burst-shard" id="bs<?php echo $si; ?>" style="width:<?php echo $sw; ?>px;height:<?php echo $sh; ?>px;"><img src="<?php echo $shard_imgs[$si]; ?>" alt=""/></div>
+    <?php endfor; ?>
+
+    <!-- Title -->
+    <div class="svc-title-reveal">
+      <h1>Our Services</h1>
+      <p class="svc-sub">Photography &amp; Videography</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var TILE_COUNT = 45;
+  var SHARD_COUNT = 16;
+  var ANGLE_STEP = 8; // degrees between each image direction
+
+  function easeInOutCubic(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; }
+
+  function runConvergence(ov) {
+    var W = window.innerWidth, H = window.innerHeight;
+    var cx = W / 2, cy = H / 2;
+    var maxDist = Math.sqrt(W * W + H * H) / 2 + 150;
+
+    // Gather elements
+    var tiles = [];
+    for (var i = 0; i < TILE_COUNT; i++) {
+      var el = ov.querySelector('#ft' + i);
+      if (el) tiles.push(el);
+    }
+    var flash = ov.querySelector('#burstFlash');
+    var ring1 = ov.querySelector('#ring1');
+    var ring2 = ov.querySelector('#ring2');
+    var shards = [];
+    for (var i = 0; i < SHARD_COUNT; i++) {
+      var s = ov.querySelector('#bs' + i);
+      if (s) shards.push(s);
+    }
+    var titleH1 = ov.querySelector('.svc-title-reveal h1');
+    var titleSub = ov.querySelector('.svc-title-reveal .svc-sub');
+
+    // ─── RESET ───
+    tiles.forEach(function(t) { t.style.opacity='0'; t.style.transition='none'; t.style.transform='none'; t.className='fly-tile'; });
+    shards.forEach(function(s) { s.style.opacity='0'; s.style.transition='none'; s.style.transform='none'; });
+    if (flash) { flash.style.opacity='0'; flash.style.width='0'; flash.style.height='0'; flash.style.transition='none'; }
+    if (ring1) { ring1.style.opacity='0'; ring1.style.width='0'; ring1.style.height='0'; ring1.style.transition='none'; }
+    if (ring2) { ring2.style.opacity='0'; ring2.style.width='0'; ring2.style.height='0'; ring2.style.transition='none'; }
+    if (titleH1) { titleH1.style.opacity='0'; titleH1.style.transform='scale(0.1)'; titleH1.style.transition='none'; }
+    if (titleSub) { titleSub.style.opacity='0'; titleSub.style.transition='none'; }
+
+    // ─── Pre-calculate tile data ───
+    var tileData = [];
+    tiles.forEach(function(t, i) {
+      var angleDeg = i * ANGLE_STEP;
+      var angleRad = angleDeg * Math.PI / 180;
+      var tw = parseInt(t.style.width) || 120;
+      var th = parseInt(t.style.height) || 90;
+
+      // Start position: far outside viewport in this angle direction
+      var startX = cx + Math.cos(angleRad) * maxDist - tw / 2;
+      var startY = cy + Math.sin(angleRad) * maxDist - th / 2;
+
+      // End position: near center (dynamic stack configuration for a larger visual attachment)
+      var clusterRadius = 35 + (i % 8) * 14; 
+      var clusterAngle = angleDeg * Math.PI / 180;
+      var endX = cx + Math.cos(clusterAngle) * clusterRadius - tw / 2;
+      var endY = cy + Math.sin(clusterAngle) * clusterRadius - th / 2;
+
+      // Random rotation
+      var startRot = (Math.random() - 0.5) * 60;
+      var endRot = (Math.random() - 0.5) * 20;
+
+      // Stagger arrival
+      var delay = i * 22;
+
+      tileData.push({
+        el: t, tw: tw, th: th,
+        sx: startX, sy: startY, sr: startRot,
+        ex: endX, ey: endY, er: endRot,
+        delay: delay, angleDeg: angleDeg
+      });
+    });
+
+    // ═══════════════════════════════════════
+    // PHASE 1: IMAGES FLY IN FROM ALL DIRECTIONS (0 → 1.8s)
+    // ═══════════════════════════════════════
+    var flyDuration = 600;
+    var totalStagger = tileData.length * 22;
+    var phase1End = totalStagger + flyDuration;
+    var t0 = null;
+
+    function phase1(ts) {
+      if (!t0) t0 = ts;
+      var elapsed = ts - t0;
+      var allDone = true;
+
+      tileData.forEach(function(d) {
+        if (elapsed < d.delay) {
+          allDone = false;
+          return;
+        }
+        var t = elapsed - d.delay;
+        if (t > flyDuration) {
+          d.el.style.left = d.ex + 'px';
+          d.el.style.top = d.ey + 'px';
+          d.el.style.transform = 'rotate(' + d.er + 'deg) scale(1)';
+          d.el.style.opacity = '1';
+          d.el.className = 'fly-tile moving landed';
+          return;
+        }
+        allDone = false;
+
+        var p = t / flyDuration;
+        var ep = easeInOutCubic(p);
+
+        var curX = d.sx + (d.ex - d.sx) * ep;
+        var curY = d.sy + (d.ey - d.sy) * ep;
+        var curR = d.sr + (d.er - d.sr) * ep;
+        var curScale = 0.4 + 0.6 * ep;
+        var curOpacity = Math.min(1, p * 3);
+
+        d.el.style.left = curX + 'px';
+        d.el.style.top = curY + 'px';
+        d.el.style.transform = 'rotate(' + curR.toFixed(1) + 'deg) scale(' + curScale.toFixed(2) + ')';
+        d.el.style.opacity = curOpacity.toFixed(2);
+        d.el.className = 'fly-tile moving';
+      });
+
+      if (!allDone || elapsed < phase1End) {
+        requestAnimationFrame(phase1);
+      } else {
+        setTimeout(phase2, 400);
+      }
+    }
+    requestAnimationFrame(phase1);
+
+    // ═══════════════════════════════════════
+    // PHASE 2: CLUSTER COMPRESSES (2.2s → 2.8s)
+    // ═══════════════════════════════════════
+    function phase2() {
+      tiles.forEach(function(t) {
+        var tw = parseInt(t.style.width) || 120;
+        var th = parseInt(t.style.height) || 90;
+        t.style.transition = 'left 0.3s cubic-bezier(0.55,0.085,0.68,0.53), top 0.3s cubic-bezier(0.55,0.085,0.68,0.53), transform 0.3s ease, opacity 0.15s ease 0.2s';
+        t.style.left = (cx - tw / 2) + 'px';
+        t.style.top = (cy - th / 2) + 'px';
+        t.style.transform = 'rotate(0deg) scale(0.15)';
+      });
+
+      setTimeout(phase3, 350);
+    }
+
+    // ═══════════════════════════════════════
+    // PHASE 3: MASSIVE BURST EXPLOSION + SHARDS (2.55s → 3.5s)
+    // ═══════════════════════════════════════
+    function phase3() {
+      // Hide original tiles immediately
+      tiles.forEach(function(t) {
+        t.style.transition = 'opacity 0.1s ease';
+        t.style.opacity = '0';
+      });
+
+      // Bright flash burst
+      if (flash) {
+        flash.style.transition = 'width 0.5s ease-out, height 0.5s ease-out, opacity 0.5s ease-out';
+        flash.style.width = Math.max(W, H) * 2 + 'px'; // larger burst overlay size
+        flash.style.height = Math.max(W, H) * 2 + 'px';
+        flash.style.opacity = '1';
+        setTimeout(function() {
+          flash.style.transition = 'opacity 0.6s ease';
+          flash.style.opacity = '0';
+        }, 400);
+      }
+
+      // Massive gold ring pulse 1
+      if (ring1) {
+        ring1.style.transition = 'width 0.8s ease-out, height 0.8s ease-out, opacity 0.8s ease-out';
+        ring1.style.width = '1000px';
+        ring1.style.height = '1000px';
+        ring1.style.opacity = '0.7';
+        setTimeout(function() { ring1.style.opacity = '0'; }, 600);
+      }
+
+      // Massive gold ring pulse 2
+      setTimeout(function() {
+        if (ring2) {
+          ring2.style.transition = 'width 0.8s ease-out, height 0.8s ease-out, opacity 0.8s ease-out';
+          ring2.style.width = '800px';
+          ring2.style.height = '800px';
+          ring2.style.opacity = '0.6';
+          setTimeout(function() { ring2.style.opacity = '0'; }, 600);
+        }
+      }, 150);
+
+      // Shards fly far outward from center
+      shards.forEach(function(s, i) {
+        var sw = parseInt(s.style.width) || 80;
+        var sh = parseInt(s.style.height) || 60;
+        s.style.left = (cx - sw / 2) + 'px';
+        s.style.top = (cy - sh / 2) + 'px';
+        s.style.opacity = '1';
+        s.style.transform = 'none';
+        s.style.transition = 'none';
+
+        var angle = (i / SHARD_COUNT) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+        var dist = 300 + Math.random() * 450; // fly much further out
+        var dx = Math.cos(angle) * dist;
+        var dy = Math.sin(angle) * dist;
+        var rot = (Math.random() - 0.5) * 180;
+
+        setTimeout(function() {
+          s.style.transition = 'transform 0.9s cubic-bezier(0.25,1,0.5,1), opacity 0.8s ease 0.2s';
+          s.style.transform = 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px) rotate(' + rot.toFixed(0) + 'deg) scale(0.3)';
+          s.style.opacity = '0';
+        }, 30 + i * 20);
+      });
+
+      // Title popup reveal
+      setTimeout(function() {
+        if (titleH1) {
+          titleH1.style.transition = 'transform 0.7s cubic-bezier(0.175,0.885,0.32,1.275), opacity 0.4s ease';
+          titleH1.style.opacity = '1';
+          titleH1.style.transform = 'scale(1)';
+        }
+        setTimeout(function() {
+          if (titleSub) {
+            titleSub.style.transition = 'opacity 0.5s ease';
+            titleSub.style.opacity = '1';
+          }
+        }, 300);
+      }, 150);
+
+      // PHASE 4: Fade overlay
+      setTimeout(function() {
+        ov.classList.add('done');
+        setTimeout(function() { ov.style.display = 'none'; }, 800);
+      }, 1600);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var ov = document.getElementById("svc-page-loader");
+    if (!ov) return;
+    runConvergence(ov);
+
+    // Re-trigger on Services nav click
+    var svcLinks = document.querySelectorAll('a[href*="services.php"], a[href$="/services"]');
+    svcLinks.forEach(function(link) {
+      link.addEventListener("click", function(e) {
+        if (window.location.pathname.indexOf("services") !== -1) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          var fresh = ov.cloneNode(true);
+          ov.parentNode.replaceChild(fresh, ov);
+          ov = fresh;
+          ov.style.display = "block";
+          ov.style.opacity = "1";
+          ov.style.visibility = "visible";
+          ov.classList.remove("done");
+          runConvergence(ov);
+        }
+      });
+    });
+  });
+})();
+</script>
 
     <div class="wrapper bg-pastel-default">
-      <div class="container inner inner-page-padding text-center">
+      <div class="container services-header-container text-center">
         <h1 class="section-title section-title-upper larger">Our Services</h1>
         <p class="lead larger mb-0">We specialize in capturing your special moments with creativity, concept & passion.</p>
       </div>
@@ -942,6 +1557,41 @@ include 'includes/header.php';
             <?php endif; ?>
             <div class="space15"></div>
             <a href="<?php echo BASE_URL; ?>/contact?service=<?php echo $service['slug']; ?>" class="btn btn-white shadow">Book This Service</a>
+
+            <?php
+            $stamp_img = '';
+            $stamp_class = '';
+            if ($service['slug'] === 'weddings') {
+                $stamp_img = BASE_URL . '/assets/images/images/wedding/img_2.jpg';
+                $stamp_class = 'stamp-weddings';
+            } elseif ($service['slug'] === 'reception') {
+                $stamp_img = BASE_URL . '/assets/images/images/Reception/reception_11.jpg';
+                $stamp_class = 'stamp-reception';
+            } elseif ($service['slug'] === 'pre-wedding') {
+                $stamp_img = BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_2.jpg';
+                $stamp_class = 'stamp-prewedding';
+            } elseif ($service['slug'] === 'baby-shoots') {
+                $stamp_img = BASE_URL . '/assets/images/images/baby_shoots/img_3.jpg';
+                $stamp_class = 'stamp-babyshoots';
+            } elseif ($service['slug'] === 'birthdays') {
+                $stamp_img = BASE_URL . '/assets/images/images/baby_shoots/img_1.jpg';
+                $stamp_class = 'stamp-birthdays';
+            } elseif ($service['slug'] === 'baby-shower') {
+                $stamp_img = BASE_URL . '/assets/images/images/baby_shower/baby_shower_6.jpg';
+                $stamp_class = 'stamp-babyshower';
+            } elseif ($service['slug'] === 'maternity') {
+                $stamp_img = BASE_URL . '/assets/images/images/maternity/maternity_11.jpg';
+                $stamp_class = 'stamp-maternity';
+            }
+            if ($stamp_img):
+            ?>
+            <div class="postage-stamp <?php echo $stamp_class; ?>">
+              <div class="postmark-seal"></div>
+              <div class="postage-stamp-inner">
+                <img src="<?php echo $stamp_img; ?>" alt="Stamp Photo" loading="lazy" />
+              </div>
+            </div>
+            <?php endif; ?>
           </div>
           <!--/column -->
           <div class="space30 d-block d-lg-none d-xl-none"></div>

@@ -126,7 +126,7 @@ if (strpos($og_image, 'http') !== 0) {
     
     /* Custom Header Spacing for Inner Pages to clear the new compact header */
     .inner-page-padding {
-      padding-top: 84px !important;
+      padding-top: 145px !important;
     }
     
     .inner-banner-padding {
@@ -148,7 +148,7 @@ if (strpos($og_image, 'http') !== 0) {
         padding-top: 50px !important;
       }
       .inner-page-padding {
-        padding-top: 70px !important;
+        padding-top: 110px !important;
       }
       .inner-banner-padding {
         padding-top: 100px !important;
