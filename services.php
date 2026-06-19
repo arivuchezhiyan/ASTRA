@@ -299,6 +299,7 @@ include 'includes/header.php';
     background: #151515;
     border-radius: 4px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    overflow: hidden;
   }
   .prewedding-magazine .film-strip-sprockets {
     position: absolute;
@@ -315,22 +316,37 @@ include 'includes/header.php';
   .prewedding-magazine .film-reel {
     display: flex;
     gap: 12px;
+    width: max-content;
+    animation: filmScroll 24s linear infinite;
   }
   .prewedding-magazine .film-card {
-    flex: 1;
-    aspect-ratio: 1.33;
+    width: 180px;
+    height: 135px;
+    flex-shrink: 0;
     border: 2px solid #000;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease;
   }
   .prewedding-magazine .film-card:hover {
-    transform: scale(1.04);
-    border-color: #555;
+    transform: scale(1.05);
+    border-color: #777;
   }
   .prewedding-magazine .film-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  .prewedding-magazine .film-strip-wrap:hover .film-reel {
+    animation-play-state: paused;
+  }
+
+  @keyframes filmScroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(calc(-50% - 6px), 0, 0);
+    }
   }
 
   /* Colored pushpins */
@@ -761,6 +777,21 @@ include 'includes/header.php';
       background: none !important;
       padding: 0 !important;
       box-shadow: none !important;
+      overflow: visible !important;
+    }
+    .prewedding-magazine .film-reel {
+      width: 100% !important;
+      animation: none !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 12px !important;
+    }
+    .prewedding-magazine .film-card {
+      width: calc(33.333% - 8px) !important;
+      height: 120px !important;
+    }
+    .prewedding-magazine .film-card:nth-child(n+7) {
+      display: none !important;
     }
     .prewedding-magazine .film-strip-sprockets,
     .prewedding-magazine .film-strip-wrap::before,
@@ -833,10 +864,10 @@ include 'includes/header.php';
         $collage_images = [];
         if ($service['slug'] === 'weddings') {
             $collage_images = [
-                BASE_URL . '/assets/images/images/wedding/img_15.jpg',
-                BASE_URL . '/assets/images/images/wedding/img_1.jpg',
-                BASE_URL . '/assets/images/images/wedding/img_4.jpg',
-                BASE_URL . '/assets/images/images/wedding/img_8.jpg'
+                BASE_URL . '/assets/images/images/wedding/img_6.jpg',
+                BASE_URL . '/assets/images/images/wedding/img_11.jpg',
+                BASE_URL . '/assets/images/images/wedding/img_18.jpg',
+                BASE_URL . '/assets/images/images/wedding/img_15.jpg'
             ];
         } elseif ($service['slug'] === 'reception') {
             $collage_images = [
@@ -850,7 +881,10 @@ include 'includes/header.php';
                 BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_1.jpg',
                 BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_3.jpg',
                 BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_5.jpg',
-                BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_7.jpg'
+                BASE_URL . '/assets/images/images/pre_wedding/pre_wedding_7.jpg',
+                BASE_URL . '/assets/images/images/wedding/img_5.jpg',
+                BASE_URL . '/assets/images/images/wedding/img_9.jpg',
+                BASE_URL . '/assets/images/images/wedding/img_14.jpg'
             ];
         } elseif ($service['slug'] === 'baby-shoots') {
             $collage_images = [
@@ -988,8 +1022,18 @@ include 'includes/header.php';
                   <div class="film-strip-sprockets sprockets-top"></div>
                   <div class="film-reel">
                     <div class="film-card"><img src="<?php echo $collage_images[1]; ?>" alt="Pre Wedding Film 1" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[4]; ?>" alt="Wedding Showcase 1" loading="lazy" /></div>
                     <div class="film-card"><img src="<?php echo $collage_images[2]; ?>" alt="Pre Wedding Film 2" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[5]; ?>" alt="Wedding Showcase 2" loading="lazy" /></div>
                     <div class="film-card"><img src="<?php echo $collage_images[3]; ?>" alt="Pre Wedding Film 3" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[6]; ?>" alt="Wedding Showcase 3" loading="lazy" /></div>
+                    <!-- Duplicate images for seamless scroll looping -->
+                    <div class="film-card"><img src="<?php echo $collage_images[1]; ?>" alt="Pre Wedding Film 1 Copy" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[4]; ?>" alt="Wedding Showcase 1 Copy" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[2]; ?>" alt="Pre Wedding Film 2 Copy" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[5]; ?>" alt="Wedding Showcase 2 Copy" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[3]; ?>" alt="Pre Wedding Film 3 Copy" loading="lazy" /></div>
+                    <div class="film-card"><img src="<?php echo $collage_images[6]; ?>" alt="Wedding Showcase 3 Copy" loading="lazy" /></div>
                   </div>
                   <div class="film-strip-sprockets sprockets-bottom"></div>
                 </div>
