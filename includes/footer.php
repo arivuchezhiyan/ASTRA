@@ -49,6 +49,7 @@ $footer_branches = get_branches($pdo);
         list-style: none;
         padding: 0;
         margin: 0;
+        text-align: center;
       }
       .footer-quick-links li {
         margin-bottom: 10px;
@@ -546,8 +547,8 @@ $footer_branches = get_branches($pdo);
             </div>
           </div>
           <!--/column -->
-          <div class="col-md-3 mb-20 mb-md-0 text-center text-md-right d-none d-md-flex flex-column footer-links-shift">
-            <h4 class="text-uppercase footer-links-title" style="letter-spacing: 1px; margin-bottom: 15px; color: #fff; font-weight: 700;">Quick Links</h4>
+          <div class="col-md-3 mb-20 mb-md-0 text-center d-none d-md-flex flex-column footer-links-shift">
+            <h4 class="text-uppercase footer-links-title" style="letter-spacing: 1px; margin-bottom: 15px; color: #fff; font-weight: 700; text-align: center; width: 100%;">Quick Links</h4>
             <ul class="footer-quick-links">
               <li><a href="<?php echo BASE_URL; ?>">Home</a></li>
               <li><a href="<?php echo BASE_URL; ?>/services">Services</a></li>
