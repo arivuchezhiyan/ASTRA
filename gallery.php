@@ -234,7 +234,7 @@ include 'includes/header.php';
             <figure class="overlay <?php echo $is_video ? '' : 'overlay3'; ?> rounded" style="position: relative; width: 100%; height: 100%; margin: 0; overflow: hidden;">
               <?php if ($is_video): ?>
                 <div class="video-trigger" style="cursor: pointer;" data-src="<?php echo upload_url('gallery', $img['image']); ?>">
-                  <video src="<?php echo upload_url('gallery', $img['image']); ?>" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop></video>
+                  <video data-src="<?php echo upload_url('gallery', $img['image']); ?>" style="width: 100%; height: 100%; object-fit: cover;" muted playsinline loop preload="none"></video>
                   <div class="video-play-indicator" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 2.2rem; text-shadow: 0 4px 10px rgba(0,0,0,0.55); pointer-events: none; z-index: 5;"><i class="fa fa-play-circle"></i></div>
                 </div>
               <?php else: ?>
@@ -255,15 +255,15 @@ include 'includes/header.php';
           <div class="space20"></div>
           <!-- Show placeholder gallery with template images -->
           <div id="cube-grid-mosaic" class="cbp light-gallery">
-            <div class="cbp-item size-medium"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp1-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp1.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-tall"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp2-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp2.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-short"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp3-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp3.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-medium"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp4-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp4.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-tall"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp5-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp5.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-short"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp6-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp6.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-medium"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp7-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp7.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-tall"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp8-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp8.jpg" alt="" /></a></figure></div>
-            <div class="cbp-item size-short"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp9-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp9.jpg" alt="" /></a></figure></div>
+            <div class="cbp-item size-medium"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp1-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp1.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-tall"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp2-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp2.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-short"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp3-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp3.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-medium"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp4-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp4.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-tall"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp5-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp5.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-short"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp6-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp6.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-medium"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp7-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp7.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-tall"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp8-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp8.jpg" alt="" loading="lazy" /></a></figure></div>
+            <div class="cbp-item size-short"><figure class="overlay overlay3 rounded"><a href="<?php echo ASSETS_URL; ?>/images/art/jp9-full.jpg"><img src="<?php echo ASSETS_URL; ?>/images/art/jp9.jpg" alt="" loading="lazy" /></a></figure></div>
           </div>
         </div>
         <?php endif; ?>
@@ -282,12 +282,51 @@ include 'includes/header.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Lazy-load videos using IntersectionObserver to prevent connection saturation
+    var videoObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            var video = entry.target;
+            if (entry.isIntersecting) {
+                // Video is visible or close, load it
+                var dataSrc = video.getAttribute('data-src');
+                if (dataSrc && !video.getAttribute('src')) {
+                    video.setAttribute('preload', 'auto');
+                    video.setAttribute('src', dataSrc);
+                    video.load();
+                }
+            } else {
+                // Video is off-screen or hidden by filters, unload to free up connections/decoders
+                if (video.getAttribute('src')) {
+                    video.pause();
+                    video.removeAttribute('src');
+                    video.setAttribute('preload', 'none');
+                    video.load();
+                }
+            }
+        });
+    }, {
+        rootMargin: '200px 0px', // start loading when within 200px of viewport
+        threshold: 0.01
+    });
+
+    // Observe all videos in the grid
+    var gridVideos = document.querySelectorAll('#cube-grid-mosaic video');
+    gridVideos.forEach(function(video) {
+        videoObserver.observe(video);
+    });
+
     // Play video on hover
     var items = document.querySelectorAll('#cube-grid-mosaic .cbp-item.video-item');
     items.forEach(function(item) {
         var video = item.querySelector('video');
         if (video) {
             item.addEventListener('mouseenter', function() {
+                var dataSrc = video.getAttribute('data-src');
+                if (dataSrc && !video.getAttribute('src')) {
+                    video.setAttribute('preload', 'auto');
+                    video.setAttribute('src', dataSrc);
+                    video.load();
+                }
                 video.play().catch(function(e) {});
             });
             item.addEventListener('mouseleave', function() {

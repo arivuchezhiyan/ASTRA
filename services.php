@@ -908,7 +908,9 @@ include 'includes/header.php';
     opacity: 0;
     z-index: 10;
     pointer-events: none;
-    will-change: transform, opacity, left, top;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform, opacity;
     overflow: hidden;
   }
   .fly-tile img {
@@ -1085,13 +1087,13 @@ include 'includes/header.php';
   }
 
   /* Specific Positions for each service postage stamp */
-  .stamp-weddings { bottom: -45px; left: -15px; transform: rotate(-8deg); }
+  .stamp-weddings { bottom: -45px; right: 35px; transform: rotate(-8deg); }
   .stamp-reception { bottom: -40px; right: -15px; transform: rotate(10deg); }
-  .stamp-prewedding { bottom: -45px; left: -10px; transform: rotate(-12deg); }
+  .stamp-prewedding { bottom: -45px; right: 30px; transform: rotate(-12deg); }
   .stamp-babyshoots { bottom: -40px; right: -12px; transform: rotate(7deg); }
-  .stamp-birthdays { bottom: -45px; left: -15px; transform: rotate(-10deg); }
+  .stamp-birthdays { bottom: -45px; right: 35px; transform: rotate(-10deg); }
   .stamp-babyshower { bottom: -40px; right: -10px; transform: rotate(8deg); }
-  .stamp-maternity { bottom: -45px; left: -12px; transform: rotate(-6deg); }
+  .stamp-maternity { bottom: -45px; right: 30px; transform: rotate(-6deg); }
 
   @media (max-width: 991.98px) {
     .postage-stamp {
@@ -1264,6 +1266,14 @@ include 'includes/header.php';
       var endX = cx + Math.cos(clusterAngle) * clusterRadius - tw / 2;
       var endY = cy + Math.sin(clusterAngle) * clusterRadius - th / 2;
 
+      // Set static left and top once to completely prevent layout calculation inside keyframes loop
+      t.style.left = endX + 'px';
+      t.style.top = endY + 'px';
+
+      // Relative offsets
+      var dx = startX - endX;
+      var dy = startY - endY;
+
       // Random rotation
       var startRot = (Math.random() - 0.5) * 60;
       var endRot = (Math.random() - 0.5) * 20;
@@ -1273,9 +1283,8 @@ include 'includes/header.php';
 
       tileData.push({
         el: t, tw: tw, th: th,
-        sx: startX, sy: startY, sr: startRot,
-        ex: endX, ey: endY, er: endRot,
-        delay: delay, angleDeg: angleDeg
+        dx: dx, dy: dy, sr: startRot, er: endRot,
+        delay: delay
       });
     });
 
@@ -1299,9 +1308,7 @@ include 'includes/header.php';
         }
         var t = elapsed - d.delay;
         if (t > flyDuration) {
-          d.el.style.left = d.ex + 'px';
-          d.el.style.top = d.ey + 'px';
-          d.el.style.transform = 'rotate(' + d.er + 'deg) scale(1)';
+          d.el.style.transform = 'translate3d(0, 0, 0) rotate(' + d.er + 'deg) scale(1)';
           d.el.style.opacity = '1';
           d.el.className = 'fly-tile moving landed';
           return;
@@ -1311,15 +1318,13 @@ include 'includes/header.php';
         var p = t / flyDuration;
         var ep = easeInOutCubic(p);
 
-        var curX = d.sx + (d.ex - d.sx) * ep;
-        var curY = d.sy + (d.ey - d.sy) * ep;
-        var curR = d.sr + (d.er - d.sr) * ep;
-        var curScale = 0.4 + 0.6 * ep;
+        var tx = d.dx * (1 - ep);
+        var ty = d.dy * (1 - ep);
+        var curR = d.er + (d.sr - d.er) * (1 - ep);
+        var curScale = 1 + (0.4 - 1) * (1 - ep);
         var curOpacity = Math.min(1, p * 3);
 
-        d.el.style.left = curX + 'px';
-        d.el.style.top = curY + 'px';
-        d.el.style.transform = 'rotate(' + curR.toFixed(1) + 'deg) scale(' + curScale.toFixed(2) + ')';
+        d.el.style.transform = 'translate3d(' + tx.toFixed(1) + 'px, ' + ty.toFixed(1) + 'px, 0) rotate(' + curR.toFixed(1) + 'deg) scale(' + curScale.toFixed(2) + ')';
         d.el.style.opacity = curOpacity.toFixed(2);
         d.el.className = 'fly-tile moving';
       });
@@ -1339,10 +1344,14 @@ include 'includes/header.php';
       tiles.forEach(function(t) {
         var tw = parseInt(t.style.width) || 120;
         var th = parseInt(t.style.height) || 90;
-        t.style.transition = 'left 0.3s cubic-bezier(0.55,0.085,0.68,0.53), top 0.3s cubic-bezier(0.55,0.085,0.68,0.53), transform 0.3s ease, opacity 0.15s ease 0.2s';
-        t.style.left = (cx - tw / 2) + 'px';
-        t.style.top = (cy - th / 2) + 'px';
-        t.style.transform = 'rotate(0deg) scale(0.15)';
+        t.style.transition = 'transform 0.3s cubic-bezier(0.55,0.085,0.68,0.53), opacity 0.15s ease 0.2s';
+        
+        var endX = parseFloat(t.style.left);
+        var endY = parseFloat(t.style.top);
+        var tx = (cx - tw / 2) - endX;
+        var ty = (cy - th / 2) - endY;
+        
+        t.style.transform = 'translate3d(' + tx.toFixed(1) + 'px, ' + ty.toFixed(1) + 'px, 0) rotate(0deg) scale(0.15)';
       });
 
       setTimeout(phase3, 350);
