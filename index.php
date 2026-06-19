@@ -31,7 +31,54 @@ usort($banners, function($a, $b) {
     return strnatcmp($a['image'], $b['image']);
 });
 $services = get_services($pdo);
-$gallery_images = get_gallery($pdo, 1, 12);
+// Curate premium non-redundant gallery images (no videos) for the Featured Shots carousel
+$gallery_images = [
+    [
+        'image' => 'pre_wedding_1.jpg',
+        'image_title' => 'Pre Wedding Moment 1',
+        'alt_tag' => 'Pre Wedding Shoot'
+    ],
+    [
+        'image' => 'wedding_img_1.jpg',
+        'image_title' => 'Wedding Moment 1',
+        'alt_tag' => 'Wedding Photography'
+    ],
+    [
+        'image' => 'baby_shoot_img_1.jpg',
+        'image_title' => 'Baby Shoot Moment 1',
+        'alt_tag' => 'Baby Shoot'
+    ],
+    [
+        'image' => 'baby_shower_1.jpg',
+        'image_title' => 'Baby Shower 1',
+        'alt_tag' => 'Baby Shower Photography'
+    ],
+    [
+        'image' => 'maternity_3.jpg',
+        'image_title' => 'Maternity 3',
+        'alt_tag' => 'Maternity Shoot'
+    ],
+    [
+        'image' => 'brahmin_1.jpg',
+        'image_title' => 'Brahmin Wedding 1',
+        'alt_tag' => 'Brahmin Wedding'
+    ],
+    [
+        'image' => 'christian_1.jpg',
+        'image_title' => 'Christian Wedding 1',
+        'alt_tag' => 'Christian Wedding'
+    ],
+    [
+        'image' => 'SaveClip.App_545409564_17998772714816562_5183963157245046212_n.jpg',
+        'image_title' => 'Couple Shooting 1',
+        'alt_tag' => 'Couple Shoot'
+    ],
+    [
+        'image' => 'reception_3.jpg',
+        'image_title' => 'Reception 3',
+        'alt_tag' => 'Reception Coverage'
+    ]
+];
 $branches = get_branches($pdo);
 
 include 'includes/header.php';
@@ -124,21 +171,21 @@ include 'includes/header.php';
         <div class="space30"></div>
         <div class="flickity-carousel-container fullscreen">
           <div class="flickity flickity-carousel">
-            <?php if (!empty($gallery_images)): ?>
-              <?php foreach ($gallery_images as $gi): ?>
-            <div class="item mr-15"><img src="<?php echo upload_url('gallery', $gi['image']); ?>" alt="<?php echo sanitize($gi['alt_tag'] ?? $gi['image_title']); ?>" loading="lazy" /></div>
-              <?php endforeach; ?>
-            <?php else: ?>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw10.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw11.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw12.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw13.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw14.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw15.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw16.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw17.jpg" alt="" /></div>
-            <div class="item mr-15"><img src="<?php echo ASSETS_URL; ?>/images/art/cw18.jpg" alt="" /></div>
-            <?php endif; ?>
+            <div class="item mr-15"><img src="assets/images/images/pre_wedding/pre_wedding_1.jpg" alt="Pre Wedding Shoot" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/wedding/img_4.jpg" alt="Wedding Photography" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/baby_shoots/img_2.jpg" alt="Baby Shoot" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/baby_shower/baby_shower_5.jpg" alt="Baby Shower Photography" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/maternity/maternity_3.jpg" alt="Maternity Shoot" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/Reception/reception_1.jpg" alt="Reception Coverage" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/brahmin_wedding/brahmin_1.jpg" alt="Brahmin Wedding" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/christian_wedding/christian_1.jpg" alt="Christian Wedding" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/wedding/img_10.jpg" alt="Wedding Shoot" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/pre_wedding/pre_wedding_3.jpg" alt="Pre Wedding Portrait" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/wedding/img_8.jpg" alt="Wedding Portrait" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/baby_shoots/img_6.jpg" alt="Baby Shoot Portrait" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/baby_shower/baby_shower_7.jpg" alt="Baby Shower Portrait" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/maternity/maternity_5.jpg" alt="Maternity Portrait" loading="lazy" /></div>
+            <div class="item mr-15"><img src="assets/images/images/Reception/reception_3.jpg" alt="Reception Moment" loading="lazy" /></div>
           </div>
           <!-- /.flickity-carousel -->
           <p class="flickity-status"></p>

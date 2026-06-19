@@ -6,7 +6,7 @@
 // Load environment variables
 require_once __DIR__ . '/env.php';
 
-define('BASE_URL', getenv('BASE_URL') !== false ? getenv('BASE_URL') : '/photo/astroclicks');
+define('BASE_URL', getenv('BASE_URL') !== false ? getenv('BASE_URL') : '/astraclicks');
 define('ASSETS_URL', BASE_URL . '/style');
 define('UPLOAD_URL', BASE_URL . '/uploads');
 define('UPLOAD_DIR', dirname(dirname(__DIR__)) . '/uploads');

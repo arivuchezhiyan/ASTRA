@@ -210,16 +210,7 @@ if (strpos($og_image, 'http') !== 0) {
         <div class="navbar-collapse collapse justify-content-between align-items-center">
           <ul class="navbar-nav plain mx-auto text-center">
             <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>">Home</a></li>
-            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="<?php echo BASE_URL; ?>/services">Services</a>
-              <ul class="dropdown-menu">
-                <?php
-                $nav_services = get_services($pdo);
-                foreach ($nav_services as $ns) {
-                    echo '<li class="nav-item"><a class="dropdown-item" href="' . BASE_URL . '/services/' . $ns['slug'] . '">' . sanitize($ns['service_name']) . '</a></li>';
-                }
-                ?>
-              </ul>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/services">Services</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/gallery">Gallery</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/blogs">Blog</a></li>
             <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/contact">Contact</a></li>
