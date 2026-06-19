@@ -279,6 +279,233 @@ $footer_branches = get_branches($pdo);
           box-shadow: 0 2px 6px rgba(155, 75, 44, 0.2) !important;
         }
       }
+
+      /* Social Popup Overlay */
+      .social-popup-overlay {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 100000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .social-popup-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Glassmorphism Popup Card */
+      .social-popup-card {
+        position: relative;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 24px;
+        width: 90%;
+        max-width: 480px;
+        padding: 40px 30px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        transform: scale(0.8) translateY(20px);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-align: center;
+        color: #fff;
+      }
+
+      .social-popup-overlay.active .social-popup-card {
+        transform: scale(1) translateY(0);
+      }
+
+      /* Close Button */
+      .social-popup-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 28px;
+        cursor: pointer;
+        transition: color 0.2s, transform 0.2s;
+        line-height: 1;
+      }
+
+      .social-popup-close:hover {
+        color: #fff;
+        transform: scale(1.1);
+      }
+
+      /* Header */
+      .social-popup-header h3 {
+        font-family: 'Great Vibes', 'Brush Script MT', cursive;
+        font-size: 42px;
+        margin-bottom: 8px;
+        color: #fff;
+        text-transform: none;
+        font-weight: normal;
+      }
+
+      .social-popup-header p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        margin-bottom: 30px;
+      }
+
+      /* Buttons Grid */
+      .social-popup-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      /* Individual Social Button */
+      .popup-social-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        text-decoration: none !important;
+        color: #fff !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .popup-social-btn .icon-wrap {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .popup-social-btn .icon-wrap i {
+        font-size: 24px;
+      }
+
+      .popup-social-btn span {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      /* Hover States with Custom Glows & Colors */
+      /* WhatsApp */
+      .popup-social-btn.whatsapp:hover {
+        background: rgba(37, 211, 102, 0.15);
+        border-color: rgba(37, 211, 102, 0.4);
+        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.25);
+        transform: translateY(-5px);
+      }
+      .popup-social-btn.whatsapp:hover .icon-wrap {
+        background: #25D366;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(37, 211, 102, 0.6);
+      }
+
+      /* Facebook */
+      .popup-social-btn.facebook:hover {
+        background: rgba(24, 119, 242, 0.15);
+        border-color: rgba(24, 119, 242, 0.4);
+        box-shadow: 0 10px 20px rgba(24, 119, 242, 0.25);
+        transform: translateY(-5px);
+      }
+      .popup-social-btn.facebook:hover .icon-wrap {
+        background: #1877F2;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(24, 119, 242, 0.6);
+      }
+
+      /* Instagram */
+      .popup-social-btn.instagram:hover {
+        background: rgba(225, 48, 108, 0.15);
+        border-color: rgba(225, 48, 108, 0.4);
+        box-shadow: 0 10px 20px rgba(225, 48, 108, 0.25);
+        transform: translateY(-5px);
+      }
+      .popup-social-btn.instagram:hover .icon-wrap {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(225, 48, 108, 0.6);
+      }
+
+      /* YouTube */
+      .popup-social-btn.youtube:hover {
+        background: rgba(255, 0, 0, 0.15);
+        border-color: rgba(255, 0, 0, 0.4);
+        box-shadow: 0 10px 20px rgba(255, 0, 0, 0.25);
+        transform: translateY(-5px);
+      }
+      .popup-social-btn.youtube:hover .icon-wrap {
+        background: #FF0000;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+      }
+
+      @media (max-width: 480px) {
+        .social-popup-card {
+          padding: 30px 20px;
+        }
+        .social-popup-header h3 {
+          font-size: 34px;
+        }
+        .social-popup-grid {
+          gap: 12px;
+        }
+        .popup-social-btn {
+          padding: 15px 8px;
+        }
+      }
+
+      .social-popup-screen {
+        width: 100%;
+      }
+      
+      .social-popup-back-btn {
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .social-popup-back-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateX(-2px);
+      }
+
+      .social-popup-back-btn i {
+        font-size: 12px;
+      }
     </style>
     <footer class="dark-wrapper inverse-text">
       <div class="container inner" style="padding-top: 40px; padding-bottom: 25px;">
@@ -369,6 +596,59 @@ $footer_branches = get_branches($pdo);
     </div>
   </div>
 
+  <!-- Social Popup Modal -->
+  <div id="social-media-popup" class="social-popup-overlay">
+    <div class="social-popup-card">
+      <button class="social-popup-close" id="social-popup-close-btn">&times;</button>
+      
+      <!-- Screen 1: Main Menu -->
+      <div class="social-popup-screen" id="social-popup-screen-main">
+        <div class="social-popup-header">
+          <h3>AstraClicks</h3>
+          <p>Follow us on our social networks or text us directly</p>
+        </div>
+        <div class="social-popup-grid">
+          <a href="<?php echo WHATSAPP_URL; ?>" target="_blank" class="popup-social-btn whatsapp">
+            <div class="icon-wrap"><i class="fa fa-whatsapp"></i></div>
+            <span>WhatsApp</span>
+          </a>
+          <a href="<?php echo get_setting($pdo, 'facebook_url', '#'); ?>" target="_blank" class="popup-social-btn facebook">
+            <div class="icon-wrap"><i class="fa fa-facebook-f"></i></div>
+            <span>Facebook</span>
+          </a>
+          <a href="#" class="popup-social-btn instagram" id="main-instagram-btn">
+            <div class="icon-wrap"><i class="fa fa-instagram"></i></div>
+            <span>Instagram</span>
+          </a>
+          <a href="<?php echo get_setting($pdo, 'youtube_url', '#'); ?>" target="_blank" class="popup-social-btn youtube">
+            <div class="icon-wrap"><i class="fa fa-youtube-play"></i></div>
+            <span>YouTube</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Screen 2: Instagram Sub-menu -->
+      <div class="social-popup-screen" id="social-popup-screen-instagram" style="display: none;">
+        <button class="social-popup-back-btn" id="social-popup-back-btn"><i class="fa fa-arrow-left"></i> Back</button>
+        <div class="social-popup-header" style="margin-top: 15px;">
+          <h3>Instagram Pages</h3>
+          <p>Choose which of our Instagram pages you want to visit</p>
+        </div>
+        <div class="social-popup-grid">
+          <a href="https://www.instagram.com/weddings_by_astra?igsh=MTJpbWgwYzFyNjUw" target="_blank" class="popup-social-btn instagram">
+            <div class="icon-wrap"><i class="fa fa-instagram"></i></div>
+            <span>Wedding Page</span>
+          </a>
+          <a href="https://www.instagram.com/astraclicks?igsh=NGNzY2RxczA4bW9v" target="_blank" class="popup-social-btn instagram">
+            <div class="icon-wrap"><i class="fa fa-instagram"></i></div>
+            <span>Baby Shoot Page</span>
+          </a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
   <script src="<?php echo ASSETS_URL; ?>/js/jquery.min.js"></script>
   <script src="<?php echo ASSETS_URL; ?>/js/popper.min.js"></script>
   <script src="<?php echo ASSETS_URL; ?>/js/bootstrap.min.js"></script>
@@ -385,5 +665,58 @@ $footer_branches = get_branches($pdo);
   <script src="<?php echo ASSETS_URL; ?>/revolution/js/extensions/revolution.extension.video.min.js"></script>
   <script src="<?php echo ASSETS_URL; ?>/js/plugins.js"></script>
   <script src="<?php echo ASSETS_URL; ?>/js/scripts.js?v=1.3"></script>
+  <script>
+    $(document).ready(function() {
+      // Intercept clicks on the footer social glass icons
+      $('.social-glass-icon').on('click', function(e) {
+        e.preventDefault();
+        $('#social-media-popup').addClass('active');
+      });
+
+      // Switch to Instagram screen
+      $('#main-instagram-btn').on('click', function(e) {
+        e.preventDefault();
+        $('#social-popup-screen-main').fadeOut(200, function() {
+          $('#social-popup-screen-instagram').fadeIn(200);
+        });
+      });
+
+      // Switch back to Main screen
+      $('#social-popup-back-btn').on('click', function() {
+        $('#social-popup-screen-instagram').fadeOut(200, function() {
+          $('#social-popup-screen-main').fadeIn(200);
+        });
+      });
+
+      // Helper function to reset popup state
+      function resetPopup() {
+        $('#social-media-popup').removeClass('active');
+        // Reset to main screen after modal transition finishes
+        setTimeout(function() {
+          $('#social-popup-screen-instagram').hide();
+          $('#social-popup-screen-main').show();
+        }, 400);
+      }
+
+      // Close button handler
+      $('#social-popup-close-btn').on('click', function() {
+        resetPopup();
+      });
+
+      // Overlay backdrop click handler
+      $('#social-media-popup').on('click', function(e) {
+        if (e.target === this) {
+          resetPopup();
+        }
+      });
+
+      // Esc key closes popup
+      $(document).on('keydown', function(e) {
+        if (e.key === 'Escape') {
+          resetPopup();
+        }
+      });
+    });
+  </script>
 </body>
 </html>

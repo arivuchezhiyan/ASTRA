@@ -31,7 +31,13 @@ $gallery = get_service_gallery($pdo, $service['id']);
 
 include 'includes/header.php';
 ?>
-    <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="<?php echo $service['banner_image'] ? upload_url('services', $service['banner_image']) : ASSETS_URL . '/images/art/bg16.jpg'; ?>">
+    <?php
+    $default_banner = ASSETS_URL . '/images/art/bg16.jpg';
+    if ($service['slug'] === 'baby-shower') {
+        $default_banner = BASE_URL . '/assets/images/images/baby_shower/baby_shower_1.jpg';
+    }
+    ?>
+    <div class="wrapper image-wrapper bg-image inverse-text" data-image-src="<?php echo $service['banner_image'] ? upload_url('services', $service['banner_image']) : $default_banner; ?>">
       <div class="container inner inner-banner-padding pb-150">
         <h1 class="heading text-center"><?php echo sanitize($service['service_name']); ?></h1>
         <p class="lead larger text-center"><?php echo sanitize($service['short_description']); ?></p>

@@ -39,6 +39,8 @@ include 'includes/header.php';
                     <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_12.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
                     <?php elseif ($service['slug'] === 'birthdays'): ?>
                     <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shoots/img_3.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 15%;" loading="lazy" />
+                    <?php elseif ($service['slug'] === 'baby-shower'): ?>
+                    <img src="<?php echo BASE_URL; ?>/assets/images/images/baby_shower/baby_shower_1.jpg" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center 25%;" loading="lazy" />
                     <?php elseif ($service['banner_image']): ?>
                     <img src="<?php echo upload_url('services', $service['banner_image']); ?>" alt="<?php echo sanitize($service['service_name']); ?>" style="width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center;" loading="lazy" />
                     <?php else: ?>
